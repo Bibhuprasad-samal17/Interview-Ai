@@ -1,8 +1,9 @@
+import {RouterProvider} from 'react-router-dom'
+import {router} from './app.route.jsx'
+
 function App() {
    return (
-    <div className="app">
-      <h1>My App</h1>
-    </div>
+    <RouterProvider router={router}/>
    )
 }
 
