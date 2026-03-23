@@ -2,7 +2,7 @@ import React from 'react'
 import "../auth.form.scss"
 import {useNavigate,Link} from 'react-router'
 
-const login = () => {
+const Login = () => {
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
@@ -18,12 +18,12 @@ const login = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" />
+                            <input type="email" id="email" placeholder='Enter your Email Address' />
                         </div>
 
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" />
+                            <input type="password" id="password" placeholder='Enter your Password'/>
                         </div>
                         
                         <button type="submit" className="button">Login</button>
@@ -37,4 +37,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
