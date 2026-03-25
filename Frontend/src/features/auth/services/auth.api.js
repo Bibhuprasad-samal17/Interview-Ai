@@ -1,69 +1,66 @@
-import axios from "axios";
+import axios from "axios"
 
 
-/**
- * This file contains functions to interact with the authentication API endpoints.
- */
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: "http://localhost:5173",
     withCredentials: true
 })
-// Registration function
+
 export async function register({ username, email, password }) {
+
     try {
-        const response = await api.post('/auth/register', {
+        const response = await api.post('/api/auth/register', {
             username, email, password
-        }, {
-            withCredentials: true
         })
+
         return response.data
-    }
-    catch (error) {
+
+    } catch (err) {
+
         console.log(err)
 
     }
+
 }
 
-
-// Login function
 export async function login({ email, password }) {
 
     try {
-        const response = await api.post('/auth/login', {
+
+        const response = await api.post("/api/auth/login", {
             email, password
-        }, {
-            withCredentials: true
         })
+
         return response.data
-    }
-    catch (error) {
+
+    } catch (err) {
         console.log(err)
     }
+
 }
 
-
-// Logout function
 export async function logout() {
     try {
-        const response = await api.post('/auth/logout', {}, {
-            withCredentials: true
-        })
+
+        const response = await api.get("/api/auth/logout")
+
         return response.data
-    }
-    catch (error) {
-        console.log(err)
+
+    } catch (err) {
+
     }
 }
 
-//get-me function
 export async function getMe() {
+
     try {
-        const response = await api.get('/auth/me', {
-            withCredentials: true
-        })
+
+        const response = await api.get("/api/auth/get-me")
+
         return response.data
-    }
-    catch (error) {
+
+    } catch (err) {
         console.log(err)
     }
+
 }
