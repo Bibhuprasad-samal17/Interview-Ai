@@ -16,11 +16,12 @@ app.use(cors({
 
 /* require all Routes here */
 const authRouter = require('./routes/auth.routes');
-
+const interviewRouter = require('./routes/interview.routes');
 
 
 /* use Routes here */
 app.use('/api/auth', authRouter);
+app.use('/api/interview', interviewRouter);
 
 
 
