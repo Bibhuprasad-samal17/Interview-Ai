@@ -162,8 +162,8 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/Neuro_hire.git
-cd Neuro_hire-main
+git clone https://github.com/Bibhuprasad-samal17/Interview-Ai.git
+cd Interview-Ai
 ```
 
 ### 2. Install Backend Dependencies
@@ -452,17 +452,6 @@ Contributions are welcome! Please follow these steps:
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the ISC License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-
-**Neuro Hire Development Team**
-
-## 📞 Support
-
-For support, email support@neurohire.com or create an issue on GitHub.
 
 ## 🚀 Future Features
 
