@@ -14,21 +14,21 @@ const interviewReportSchema = z.object({
         question: z.string().describe("The technical question can be asked in the interview"),
         intention: z.string().describe("The intention of interviewer behind asking this question"),
         answer: z.string().describe("How to answer this question, what points to cover, what approach to take etc.")
-    })).describe("Technical questions that can be asked in the interview along with their intention and how to answer them"),
+    })).min(1).describe("Technical questions that can be asked in the interview along with their intention and how to answer them"),
     behavioralQuestions: z.array(z.object({
         question: z.string().describe("The technical question can be asked in the interview"),
         intention: z.string().describe("The intention of interviewer behind asking this question"),
         answer: z.string().describe("How to answer this question, what points to cover, what approach to take etc.")
-    })).describe("Behavioral questions that can be asked in the interview along with their intention and how to answer them"),
+    })).min(1).describe("Behavioral questions that can be asked in the interview along with their intention and how to answer them"),
     skillGaps: z.array(z.object({
         skill: z.string().describe("The skill which the candidate is lacking"),
         severity: z.enum([ "low", "medium", "high" ]).describe("The severity of this skill gap, i.e. how important is this skill for the job and how much it can impact the candidate's chances")
-    })).describe("List of skill gaps in the candidate's profile along with their severity"),
+    })).min(1).describe("List of skill gaps in the candidate's profile along with their severity"),
     preparationPlan: z.array(z.object({
         day: z.number().describe("The day number in the preparation plan, starting from 1"),
         focus: z.string().describe("The main focus of this day in the preparation plan, e.g. data structures, system design, mock interviews etc."),
         tasks: z.array(z.string()).describe("List of tasks to be done on this day to follow the preparation plan, e.g. read a specific book or article, solve a set of problems, watch a video etc.")
-    })).describe("A day-wise preparation plan for the candidate to follow in order to prepare for the interview effectively"),
+    })).min(1).describe("A day-wise preparation plan for the candidate to follow in order to prepare for the interview effectively"),
     title: z.string().describe("The title of the job for which the interview report is generated"),
 })
 
@@ -39,10 +39,14 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
                         Resume: ${resume}
                         Self Description: ${selfDescription}
                         Job Description: ${jobDescription}
+
+                        Always include a numeric matchScore between 0 and 100.
+                        Return at least 3 technicalQuestions, at least 3 behavioralQuestions, at least 3 skillGaps, and at least a 3-day preparationPlan.
+                        Do not return empty arrays.
 `
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
@@ -50,9 +54,107 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
         }
     })
 
-    return JSON.parse(response.text)
+    const parsed = JSON.parse(response.text)
+    return normalizeInterviewReport(parsed)
 
 
+}
+
+function normalizeInterviewReport(report) {
+    const normalized = { ...report }
+
+    normalized.matchScore = normalizeMatchScore(normalized.matchScore)
+
+    normalized.technicalQuestions = normalizeQuestionList(
+        normalized.technicalQuestions,
+        "Provide a sample intention",
+        "Provide a sample answer approach"
+    )
+    normalized.behavioralQuestions = normalizeQuestionList(
+        normalized.behavioralQuestions,
+        "Provide a sample intention",
+        "Provide a sample answer approach"
+    )
+    normalized.skillGaps = normalizeSkillGaps(normalized.skillGaps)
+    normalized.preparationPlan = normalizePreparationPlan(normalized.preparationPlan)
+
+    return normalized
+}
+
+function normalizeMatchScore(value) {
+    const parsed = Number(value)
+    if (Number.isNaN(parsed)) {
+        return 50
+    }
+
+    return Math.max(0, Math.min(100, parsed))
+}
+
+function normalizeQuestionList(value, fallbackIntention, fallbackAnswer) {
+    if (!value) {
+        return []
+    }
+
+    const list = Array.isArray(value) ? value : [ value ]
+    return list.map((item) => {
+        if (typeof item === "string") {
+            return {
+                question: item,
+                intention: fallbackIntention,
+                answer: fallbackAnswer
+            }
+        }
+
+        return {
+            question: item.question,
+            intention: item.intention || fallbackIntention,
+            answer: item.answer || fallbackAnswer
+        }
+    })
+}
+
+function normalizeSkillGaps(value) {
+    if (!value) {
+        return []
+    }
+
+    const list = Array.isArray(value) ? value : [ value ]
+    return list.map((item) => {
+        if (typeof item === "string") {
+            return {
+                skill: item,
+                severity: "medium"
+            }
+        }
+
+        return {
+            skill: item.skill,
+            severity: item.severity || "medium"
+        }
+    })
+}
+
+function normalizePreparationPlan(value) {
+    if (!value) {
+        return []
+    }
+
+    const list = Array.isArray(value) ? value : [ value ]
+    return list.map((item, index) => {
+        if (typeof item === "string") {
+            return {
+                day: index + 1,
+                focus: "General preparation",
+                tasks: [ item ]
+            }
+        }
+
+        return {
+            day: item.day ?? index + 1,
+            focus: item.focus || "General preparation",
+            tasks: Array.isArray(item.tasks) && item.tasks.length > 0 ? item.tasks : [ "Review fundamentals" ]
+        }
+    })
 }
 
 
