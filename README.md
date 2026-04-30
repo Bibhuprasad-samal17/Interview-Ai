@@ -1,4 +1,4 @@
-# Neuro Hire - AI-Powered Interview Preparation Platform
+# Interview AI - AI-Powered Interview Preparation Platform
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-ISC-green.svg)
@@ -20,7 +20,7 @@
 
 ## 🎯 Project Overview
 
-**Neuro Hire** is an innovative, AI-powered interview preparation platform that helps job candidates prepare for interviews intelligently. It leverages Google's Gemini AI to generate personalized interview preparation reports, including technical questions, behavioral questions, skill gap analysis, and a structured preparation plan.
+**Interview AI** is an innovative, AI-powered interview preparation platform that helps job candidates prepare for interviews intelligently. It leverages Google's Gemini AI to generate personalized interview preparation reports, including technical questions, behavioral questions, skill gap analysis, and a structured preparation plan.
 
 The platform provides:
 - User authentication and account management
