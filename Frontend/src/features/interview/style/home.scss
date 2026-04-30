@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,500&display=swap");
+@import "../../../style/button.scss";
+
+.home{
+	min-height: 100vh;
+	width: 100%;
+	padding: 2.5rem 1.5rem 3rem;
+	color: #f1f1f1;
+	background: radial-gradient(900px 400px at 50% -10%, rgba(36, 92, 196, 0.35) 0%, rgba(20, 20, 20, 0) 70%), #141414;
+	font-family: "Manrope", "Segoe UI", sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.hero{
+	max-width: 1100px;
+	width: 100%;
+	margin: 0 auto 2rem;
+	padding: 1.25rem 1.5rem;
+	text-align: center;
+	border-radius: 1rem;
+	background: linear-gradient(135deg, #0e2037 0%, #172f52 55%, #0c1e35 100%);
+	box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.hero-quote{
+	font-family: "Playfair Display", "Georgia", serif;
+	font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+	font-style: italic;
+	line-height: 1.5;
+}
+
+.hero-sub{
+	margin-top: 0.5rem;
+	font-size: 0.95rem;
+	opacity: 0.8;
+}
+
+.cards{
+	max-width: 1150px;
+	width: 100%;
+	margin: 0 auto 1.5rem;
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(3, minmax(260px, 1fr));
+	align-items: stretch;
+	justify-content: center;
+}
+
+.card{
+	background: linear-gradient(180deg, #1c1c1c 0%, #161616 100%);
+	border-radius: 1rem;
+	padding: 1.5rem;
+	border: 1px solid rgba(255, 255, 255, 0.05);
+	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+	text-align: left;
+	min-height: 320px;
+	display: flex;
+	flex-direction: column;
+}
+
+.card h2{
+	font-size: 1.2rem;
+	margin-bottom: 0.35rem;
+}
+
+.helper{
+	font-size: 0.9rem;
+	opacity: 0.75;
+	margin-bottom: 0.9rem;
+}
+
+textarea,
+.file-input{
+	width: 100%;
+	padding: 0.85rem 1rem;
+	border-radius: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	background-color: #1f1f1f;
+	color: #ffffff;
+	outline: none;
+	font-family: inherit;
+}
+
+textarea{
+	min-height: 210px;
+	resize: vertical;
+	flex: 1;
+}
+
+textarea:focus,
+.file-input:focus{
+	box-shadow: 0 0 0 2px rgba(33, 110, 230, 0.4);
+}
+
+.upload-area{
+	border: 1px dashed rgba(255, 255, 255, 0.2);
+	border-radius: 0.9rem;
+	padding: 1.5rem;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+	flex: 1;
+	justify-content: center;
+}
+
+.upload-icon{
+	font-size: 1.6rem;
+	width: 48px;
+	height: 48px;
+	margin: 0 auto;
+	border-radius: 0.75rem;
+	display: grid;
+	place-items: center;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.upload-button{
+	display: inline-block;
+	padding: 0.6rem 1.2rem;
+	border-radius: 0.75rem;
+	background: #1f6feb;
+	color: #ffffff;
+	font-weight: 600;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+}
+
+.file-input{
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.file-hint{
+	font-size: 0.85rem;
+	opacity: 0.75;
+}
+
+.generate-btn{
+	@extend .button;
+	display: block;
+	margin: 0 auto;
+	min-width: 220px;
+	background: linear-gradient(135deg, #1f6feb 0%, #1bb3ff 100%);
+}
+
+.generate-btn span{
+	margin-left: 0.5rem;
+}
+
+@media (max-width: 900px){
+	.hero{
+		padding: 1rem 1.1rem;
+	}
+
+	.cards{
+		gap: 1rem;
+		grid-template-columns: 1fr;
+	}
+}
