@@ -22,9 +22,13 @@ const Register = () => {
     }
 
     return (
-        <main>
+        <main className="auth-page">
             <div className="form-container">
-                <h1>Register</h1>
+                <div className="form-header">
+                    <p className="form-kicker">Interview AI</p>
+                    <h1>Create your account</h1>
+                    <p className="form-sub">Start turning your resume into interview insights.</p>
+                </div>
 
                 <form onSubmit={handleSubmit}>
 
@@ -47,7 +51,7 @@ const Register = () => {
                             type="password" id="password" name='password' placeholder='Enter password' />
                     </div>
 
-                    <button className='button primary-button' >Register</button>
+                    <button className='button auth-button' >Register</button>
 
                 </form>
 

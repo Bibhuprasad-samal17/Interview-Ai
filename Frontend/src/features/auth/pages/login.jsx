@@ -25,9 +25,13 @@ const Login = () => {
 
 
     return (
-        <main>
+        <main className="auth-page">
             <div className="form-container">
-                <h1>Login</h1>
+                <div className="form-header">
+                    <p className="form-kicker">Interview AI</p>
+                    <h1>Welcome back</h1>
+                    <p className="form-sub">Sign in to generate tailored interview reports.</p>
+                </div>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
@@ -41,7 +45,7 @@ const Login = () => {
                             onChange={(e) => { setPassword(e.target.value) }}
                             type="password" id="password" name='password' placeholder='Enter password' />
                     </div>
-                    <button className='button primary-button' >Login</button>
+                    <button className='button auth-button' >Login</button>
                 </form>
                 <p>Don't have an account? <Link to={"/register"} >Register</Link> </p>
             </div>
