@@ -72,6 +72,7 @@ The platform provides:
 - Protected routes for authenticated users
 - SCSS-based styling
 - Smooth navigation with React Router
+- Interview report view with sections (technical, behavioral, roadmap)
 
 ## 🛠️ Tech Stack
 
@@ -100,7 +101,7 @@ The platform provides:
 ## 📁 Project Structure
 
 ```
-Neuro_hire-main/
+Interview-Ai/
 ├── package.json                    # Backend dependencies
 ├── server.js                       # Server entry point
 │
@@ -115,7 +116,6 @@ Neuro_hire-main/
 │       ├── main.jsx              # React DOM mount point
 │       ├── style.scss            # Global styles
 │       ├── features/
-│       │   ├── ai/               # AI features (future)
 │       │   └── auth/
 │       │       ├── auth.context.jsx     # Auth context provider
 │       │       ├── auth.form.scss       # Form styling
@@ -126,6 +126,16 @@ Neuro_hire-main/
 │       │       └── pages/
 │       │           ├── login.jsx        # Login page
 │       │           └── Register.jsx     # Registration page
+│       ├── features/
+│       │   └── interview/
+│       │       ├── pages/
+│       │       │   ├── Home.jsx         # Report generator
+│       │       │   └── interview.jsx    # Report viewer
+│       │       ├── services/
+│       │       │   └── interview.api.js # Interview API calls
+│       │       └── style/
+│       │           ├── home.scss        # Home styles
+│       │           └── interview.scss   # Interview styles
 │       ├── components/
 │       │   └── protected.jsx     # Protected route wrapper
 │       └── style/
@@ -192,7 +202,7 @@ MONGO_URI=mongodb://localhost:27017/neurohire
 JWT_SECRET=your_jwt_secret_key_here
 
 # Google AI API
-GOOGLE_API_KEY=your_google_gemini_api_key_here
+GEMINI_API_KEY=your_google_gemini_api_key_here
 
 # Server Port
 PORT=3000
@@ -275,12 +285,36 @@ Base URL: `http://localhost:3000/api/auth`
 - **Response**: Returns user info and JWT token
 
 #### Logout User
-- **Endpoint**: `POST /logout`
-- **Headers**: `Authorization: Bearer {token}`
+- **Endpoint**: `GET /logout`
 - **Response**: `{ "message": "User logged out successfully" }`
 
+#### Get Current User
+- **Endpoint**: `GET /get-me`
+- **Response**: `{ "message": "User details fetched successfully", "user": { "id": "...", "username": "...", "email": "..." } }`
+
 ### Interview Routes
-*(To be implemented)*
+Base URL: `http://localhost:3000/api/interview`
+
+#### Generate Interview Report
+- **Endpoint**: `POST /`
+- **Auth**: Cookie-based (JWT)
+- **Body**: `multipart/form-data`
+  - `jobDescription` (string)
+  - `selfDescription` (string)
+  - `resume` (PDF file)
+- **Response**: `{ "message": "Interview report generated successfully.", "interviewReport": { ... } }`
+
+#### Get Interview Report by ID
+- **Endpoint**: `GET /report/:interviewId`
+- **Response**: `{ "message": "Interview report fetched successfully.", "interviewReport": { ... } }`
+
+#### List Interview Reports
+- **Endpoint**: `GET /`
+- **Response**: `{ "message": "Interview reports fetched successfully.", "interviewReports": [ ... ] }`
+
+#### Generate Resume PDF
+- **Endpoint**: `POST /resume/pdf/:interviewReportId`
+- **Response**: PDF file stream
 
 ## 💾 Database Models
 
@@ -440,7 +474,7 @@ cd Frontend && npm test  # Frontend tests
 
 ### CORS Errors
 - Verify frontend URL matches CORS configuration in `src/app.js`
-- Default: `http://localhost:3000`
+- Default: `http://localhost:5173`
 
 ## 🤝 Contributing
 
